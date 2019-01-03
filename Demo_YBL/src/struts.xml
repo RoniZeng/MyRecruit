@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<constant name="struts.enable.DynamicMethodInvocation" value="true" />
+    <constant name="struts.devMode" value="true" />
+	
+	<!-- 下面是我们要写的地方了 -->
+    <package name="default" extends="json-default">
+        <!-- 下面是我们要声明配置的action -->
+        <!-- 进入公司主页，查询部分公司基本信息 -->
+         <action name="companyHome" class="com.ybl.action.ComHomeAction" method="companyHome">
+             <!-- 注意2个地方，最上面package继承（extends）的是json-default，下面result的type是json -->
+            <result name="comHomePage" type="json">
+                <!-- 这里的name=root是返回json数据时的一种类型，root是json字符串中只包含该对象的属性，而其他类型，可能会在返回的json类型中额外包含其他的属性和值 ，不一一说了-->
+                <!-- 然后这个returndata 是我们action里定义的返回的json。 -->
+                <param name="root">returndata</param>
+            </result>
+        </action>
+        <!-- 进入公司主页，查询公司最新的三个招聘信息 -->
+        <action name="selectReciritment" class="com.ybl.action.ComHomeAction" method="selectReciritment">
+            <result name="reciritment" type="json">
+                <param name="root">returndata</param>
+            </result>
+        </action>
+        <!-- 公司主页，修改公司名 -->
+        <action name="updateName" class="com.ybl.action.ComHomeAction" method="updateName">
+            <result name="success" type="json">
+                <param name="root">returndata</param>
+            </result>
+        </action>
+        <!-- 公司主页，修改logo -->
+        <action name="updateLogo" class="com.ybl.action.ComHomeAction" method="updateLogo">
+            <result name="success" type="json">
+                <param name="root">returndata</param>
+            </result>
+            <result name="error" type="json">
+                <param name="root">returndata</param>
+            </result>
+        </action>
+        <!-- 公司主页，修改简介 -->
+        <action name="updateIntroduce" class="com.ybl.action.ComHomeAction" method="updateIntroduce">
+            <result name="success" type="json">
+                <param name="root">returndata</param>
+            </result>
+        </action>
+        <!-- 公司主页，修改所在城市、规模、主页 -->
+        <action name="updateLSW" class="com.ybl.action.ComHomeAction" method="updateLSW">
+            <result name="success" type="json">
+                <param name="root">returndata</param>
+            </result>
+        </action>
+        
+           
+        
+             
+    </package>
+	
+	
+	<package name="ybl" extends="struts-default">
+		<!-- 登录 -->
+		<action name="LoginAction" class="com.ybl.action.LoginAction">
+		<result name="index">/index.jsp</result>
+		<result name="error">/login.jsp</result>
+		</action>
+		<!-- 注册 -->
+		<action name="regist2" class="com.ybl.action.RegistAction" method="regist2">
+		<result name="error">/register.jsp</result>
+		</action>
+		<action name="regist3" class="com.ybl.action.RegistAction" method="regist3">
+		<result name="success">/login.jsp</result>
+		<result name="error">/register.jsp</result>
+		</action>
+		<!-- 修改密码 -->
+		<action name="updatePassword" class="com.ybl.action.ResetPasswordAction" method="updatePassword">
+		<result name="success">/updatePwd.jsp</result>
+		</action>
+		<!-- 忘记密码-重置密码 -->
+		<action name="resetPassword1" class="com.ybl.action.ResetPasswordAction" method="resetPassword1">
+		<result name="success">/reset2.jsp</result>
+		<result name="error">/reset.jsp</result>
+		</action>
+		<action name="resetPassword2" class="com.ybl.action.ResetPasswordAction" method="resetPassword2">
+		<result name="success">/reset3.jsp</result>
+		<result name="error">/reset2.jsp</result>
+		</action>
+		<action name="resetPassword3" class="com.ybl.action.ResetPasswordAction" method="resetPassword3">
+		<result name="success">/login.jsp</result>
+		<result name="error">/reset3.jsp</result>
+		</action>    
+		<!-- 查询公司收到的特定状态的简历 -->
+		<action name="selectResume" class="com.ybl.action.ManageResumeAction" method="selectResume">
+            <result name="comgetResume0">haveNoticeResumes_result.jsp</result>
+            <result name="comgetResume1">toHandleResumes_result.jsp</result>
+            <result name="comgetResume2">canInterviewResumes_result.jsp</result>
+            <result name="comgetResume3">haveRefuseResumes_result.jsp</result>
+            <result name="comgetResume4">autoFilterResumes_result.jsp</result>
+        </action>   
+        <!-- 修改公司收到的某些简历状态,成功则刷新（转到原界面） -->
+        <action name="changeStatus" class="com.ybl.action.ManageResumeAction" method="changeStatus">
+            <result name="0">haveNoticeResumes_result.jsp</result>
+            <result name="1">toHandleResumes_result.jsp</result>
+            <result name="2">canInterviewResumes_result.jsp</result>
+            <result name="3">haveRefuseResumes_result.jsp</result>
+            <result name="4">autoFilterResumes_result.jsp</result>
+        </action> 
+        <!-- 查询id为comRecId的Resume详细信息 -->
+        <action name="detailsResume" class="com.ybl.action.ManageResumeAction" method="detailsResume">
+            <result name="detailsResume">preview.jsp</result>
+        </action> 
+		<!-- 显示该公司发布的招聘信息（按有效无效分） -->
+        <action name="selectReciritmentisOK" class="com.ybl.action.ManageReciritmentAction" method="selectReciritmentisOK">
+            <result name="isOK0">nopositions_result.jsp</result>
+            <result name="isOK1">positions_result.jsp</result>
+        </action>
+		<!-- 职位下线,转到原界面 -->
+		<action name="downline" class="com.ybl.action.ManageReciritmentAction" method="downline">
+            <result name="success">positions_result.jsp</result>
+        </action>
+		<!-- 查询id为comRecId的Reciritment详细信息 -->
+		<action name="detailsReciritment" class="com.ybl.action.ManageReciritmentAction" method="detailsReciritment">
+            <result name="detailsReciritment">jobdetail1.jsp</result>
+        </action> 
+        <!-- 发布招聘 -->
+		<action name="createReciriment" class="com.ybl.action.CreateReciritmentAction" method="createReciriment">
+            <result name="success">index06.jsp</result>
+        </action> 
+        <!-- 收藏职位 -->
+		<action name="inserFavor" class="com.ybl.action.EmployeesFavorsAction" method="inserFavor">
+        </action> 
+        <!-- 查询求职者的收藏职位 -->
+		<action name="selectFavors" class="com.ybl.action.EmployeesFavorsAction" method="selectFavors">
+            <result name="selectFavors">collections_result.jsp</result>
+            <result name="error">index.jsp</result>
+        </action> 
+        <!-- 取消收藏 -->
+		<action name="deleteFavors" class="com.ybl.action.EmployeesFavorsAction" method="deleteFavors">
+            <result name="deleteFavors">collections.jsp</result>
+            <result name="error">index.jsp</result>
+        </action> 
+        <!-- 投递简历 -->
+		<action name="sendResume" class="com.ybl.action.EmployeesFavorsAction" method="sendResume">
+           <!--  <result name="sendResume">collections.jsp</result> -->
+            <result name="error">index.jsp</result>
+        </action> 
+		<!-- 求职者点击我的简历 -->
+		<action name="myResume" class="com.ybl.action.ResumeAction" method="myResume">
+            <result name="myResume">jianli1.jsp</result>
+            <result name="error">index.jsp</result>
+        </action> 
+        <!-- 我的简历界面，修改基本信息 -->
+		<action name="updateBasic" class="com.ybl.action.ResumeAction" method="updateBasic">
+            <result name="updateBasic">jianli1.jsp</result>
+            <result name="error">index.jsp</result>
+        </action> 
+        <!-- 我的简历界面，修改期望。。。 -->
+		<action name="updateExpectation" class="com.ybl.action.ResumeAction" method="updateExpectation">
+            <result name="updateExpectation">jianli1.jsp</result>
+            <result name="error">index.jsp</result>
+        </action> 
+        <!-- 我的简历界面，增加工作经历 -->
+		<action name="insertExperience" class="com.ybl.action.ResumeAction" method="insertExperience">
+            <result name="insertExperience">jianli1.jsp</result>
+            <result name="error">index.jsp</result>
+        </action> 
+        <!-- 我的简历界面，修改项目经验 -->
+		<action name="updateProjectExperience" class="com.ybl.action.ResumeAction" method="updateProjectExperience">
+            <result name="updateProjectExperience">jianli1.jsp</result>
+            <result name="error">index.jsp</result>
+        </action> 
+        <!-- 我的简历界面，修改教育经历 -->
+		<action name="updateEducation" class="com.ybl.action.ResumeAction" method="updateEducation">
+            <result name="updateEducation">jianli1.jsp</result>
+            <result name="schoolNull">jianli1.jsp</result>
+            <result name="error">index.jsp</result>
+        </action> 
+        <!-- 我的简历界面，修改自我描述 -->
+		<action name="updateEvaluation" class="com.ybl.action.ResumeAction" method="updateEvaluation">
+            <result name="updateEvaluation">jianli1.jsp</result>
+            <result name="error">index.jsp</result>
+        </action> 
+        <!-- 我的简历界面，修改论文（作品展示） -->
+		<action name="updatePaper" class="com.ybl.action.ResumeAction" method="updatePaper">
+            <result name="updatePaper">jianli1.jsp</result>
+            <result name="error">index.jsp</result>
+        </action> 
+        <!-- 招聘信息搜索 -->
+        <action name="selectReciritmentAll" class="com.ybl.action.FindJobAction" method="selectReciritment">
+            <result name="selectReciritment">list_result.jsp</result>
+        </action>
+        <!-- 注销，退出登录 -->
+        <action name="logout" class="com.ybl.action.LogoutAction" method="logout">
+        </action>
+        
+        <!-- 管理员登录 -->
+        <action name="adminLogin" class="com.ybl.action.AdminAction" method="adminLogin">
+            <result name="adminLogin">super_search.jsp</result>
+            <result name="error">super_login.jsp</result>
+        </action>
+        <!-- 管理员，删除数据 -->
+        <action name="adminDelete" class="com.ybl.action.AdminAction" method="adminDelete">
+            <result name="adminDelete">super_search_result.jsp</result>
+            <result name="notAdmin">super_login.jsp</result>
+        </action>
+        <!-- 管理员，Update数据 -->
+        <action name="adminUpdate" class="com.ybl.action.AdminAction" method="adminUpdate">
+            <result name="adminUpdate">super_search_result.jsp</result>
+            <result name="notAdmin">super_login.jsp</result>
+        </action>
+        <!-- 管理员，各种搜索,输入表名、属性名、属性值 -->
+        <action name="admin_find" class="com.ybl.action.AdminAction" method="admin_find">
+            <result name="admin_find">super_search_result.jsp</result>
+            <result name="notAdmin">super_login.jsp</result>
+        </action>
+        
+        
+        
+        <!-- 管理员，按职位名、公司名。。。搜索 -->
+        <action name="adminFind" class="com.ybl.action.AdminAction" method="adminFind">
+            <result name="adminFind">super_search_result.jsp</result>
+            <result name="notAdmin">super_login.jsp</result>
+        </action>
+         <!-- 管理员，增加管理员 -->
+        <action name="addAdmin" class="com.ybl.action.AdminAction" method="addAdmin">
+            <result name="addAdmin">????.jsp</result>
+            <result name="notSuperAdmin">super_login.jsp</result>
+        </action>
+         <!-- 管理员，修改密码 -->
+        <action name="adminUpdatePassword" class="com.ybl.action.AdminAction" method="adminUpdatePassword">
+            <result name="adminUpdatePassword">??????.jsp</result>
+            <result name="notAdmin">super_login.jsp</result>
+            <result name="error">?????.jsp</result>
+        </action>
+         <!-- 管理员，增加职位分类 -->
+        <action name="adminInsertCategory" class="com.ybl.action.AdminAction" method="adminInsertCategory">
+            <result name="adminInsertCategory">??????.jsp</result>
+            <result name="notAdmin">super_login.jsp</result>
+        </action>
+         <!-- 管理员，增加职位信息 -->
+        <action name="adminInsertPosition" class="com.ybl.action.AdminAction" method="adminInsertPosition">
+            <result name="adminInsertPosition">?????.jsp</result>
+            <result name="notAdmin">super_login.jsp</result>
+            <result name="error">?????.jsp</result>
+        </action>
+         <!-- 管理员，增加学校信息 -->
+        <action name="adminInsertSchool" class="com.ybl.action.AdminAction" method="adminInsertSchool">
+            <result name="adminInsertSchool">?????.jsp</result>
+            <result name="notAdmin">super_login.jsp</result>
+        </action>
+        
+        <!-- 投递的某状态的简历查询  -->
+        <action name="selectStatus" class="com.ybl.action.ResumeAction" method="selectStatus">
+            <result name="selectStatus">test_result.jsp</result>
+            <result name="error">index.jsp</result>
+        </action>
+        
+	</package>
+	
+	
+	
+</struts>    

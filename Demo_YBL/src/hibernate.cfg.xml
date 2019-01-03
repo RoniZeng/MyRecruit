@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+          "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+          "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+	<session-factory>
+		<property name="dialect">
+			org.hibernate.dialect.MySQLDialect
+		</property>
+		<property name="connection.url">
+			jdbc:mysql://localhost:3306/ybl
+		</property>
+		<property name="connection.username">root</property>
+		<property name="connection.password">123456</property>
+		<property name="connection.driver_class">
+			com.mysql.jdbc.Driver
+		</property>
+		<property name="myeclipse.connection.profile">
+			com.mysql.jdbc.Driver
+		</property>
+		<!-- 		 		<property name="show_sql">true</property>  -->
+
+		<mapping resource="com/ybl/model/Resume.hbm.xml" />
+		<mapping resource="com/ybl/model/School.hbm.xml" />
+		<mapping resource="com/ybl/model/Company.hbm.xml" />
+		<mapping resource="com/ybl/model/Reciritment.hbm.xml" />
+		<mapping resource="com/ybl/model/Category.hbm.xml" />
+		<mapping resource="com/ybl/model/Position.hbm.xml" />
+		<mapping resource="com/ybl/model/CompanyGetResume.hbm.xml" />
+		<mapping resource="com/ybl/model/Employee.hbm.xml" />
+		<mapping resource="com/ybl/model/Experience.hbm.xml" />
+		<mapping resource="com/ybl/model/Education.hbm.xml" />
+		<!-- 		<mapping resource="com/ybl/model/CompanyGetResume.hbm.xml" />   -->
+		<mapping resource="com/ybl/model/Registinfo.hbm.xml" />
+		<mapping resource="com/ybl/model/Userinfo.hbm.xml" />
+		<mapping resource="com/ybl/model/Favors.hbm.xml" />
+		<mapping resource="com/ybl/model/Message.hbm.xml" />
+		<mapping resource="com/ybl/model/Admin.hbm.xml" />
+	</session-factory>
+
+</hibernate-configuration>
